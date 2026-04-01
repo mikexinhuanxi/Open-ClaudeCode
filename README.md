@@ -84,7 +84,10 @@ Open-ClaudeCode/
 ### 前置要求
 
 - **Node.js 18+** ([下载](https://nodejs.org/))
-- **API 密钥** - 需要 Anthropic API Key 或已登录 Claude 账号
+- **API 密钥**（任选一种）：
+  - 🔵 **Anthropic 官方 API** — 在 [console.anthropic.com](https://console.anthropic.com/) 注册获取 API Key
+  - 🟢 **第三方代理** — 国内用户推荐，获取代理地址和 API Key（如 `ai.ltcraft.cn` 等）
+  - 🔴 **Claude 订阅账号** — 运行后通过 OAuth 登录（需科学上网）
 
 ### 第一步：克隆并运行
 
@@ -103,27 +106,45 @@ node package/cli.js
 
 ### 第二步：认证
 
-首次运行需要登录认证：
+首次运行需要认证，选择以下**任一方式**：
+
+#### 方式一：第三方代理（国内推荐 🇨🇳）
+
+适合中国大陆用户，无需科学上网：
+
+1. 获取第三方代理的 API 地址和密钥
+2. 创建 `settings.json`：
+```json
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://你的代理地址",
+    "ANTHROPIC_AUTH_TOKEN": "sk-你的密钥"
+  }
+}
+```
+3. 运行：`node package/cli.js --settings settings.json`
+
+#### 方式二：Anthropic 官方 API
+
+1. 访问 [console.anthropic.com](https://console.anthropic.com/) 注册账号
+2. 获取 API Key（格式 `sk-ant-...`）
+3. 创建 `settings.json`：
+```json
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "sk-ant-你的密钥"
+  }
+}
+```
+4. 运行：`node package/cli.js --settings settings.json`
+
+#### 方式三：Claude 订阅账号（OAuth）
+
+需要 Claude 订阅 + 科学上网：
 
 ```bash
-# 方式一：OAuth 登录（推荐）
-# 运行后会自动打开浏览器，用 Claude 账号登录即可
-
-# 方式二：API Key
-# 设置环境变量后运行
-$env:ANTHROPIC_API_KEY="sk-ant-..."  # PowerShell
+# 直接运行，会自动打开浏览器登录
 node package/cli.js
-
-# 方式三：第三方代理（国内推荐）
-# 创建配置文件 settings.json：
-# {
-#   "env": {
-#     "ANTHROPIC_BASE_URL": "https://你的代理地址",
-#     "ANTHROPIC_AUTH_TOKEN": "sk-你的密钥"
-#   }
-# }
-# 然后运行：
-node package/cli.js --settings settings.json
 ```
 
 ---
